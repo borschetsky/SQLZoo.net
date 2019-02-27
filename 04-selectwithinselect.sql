@@ -47,6 +47,14 @@ SELECT continent, name, area FROM world x
   WHERE x.area = ALL
     (SELECT MAX(area) FROM world y
         WHERE y.continent=x.continent);
+ #Second query
+ SELECT continent, name, area FROM world x
+  WHERE area = (SELECT MAX(area) FROM world y WHERE x.continent = y.continent);
+#Third query
+SELECT continent, name, area FROM world
+WHERE area IN
+(SELECT MAX(area) FROM world 
+GROUP BY continent);
         
 #8
 #List each continent and the name of the country that comes first alphabetically.
