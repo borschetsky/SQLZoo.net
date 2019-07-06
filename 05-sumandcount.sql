@@ -39,6 +39,14 @@ GROUP BY continent;
 SELECT continent FROM world
 GROUP BY continent
 HAVING SUM(population) >= 100000000;
+#Second query
+SELECT DISTINCT x.continent
+FROM world x
+WHERE 100000000 < ALL(
+SELECT SUM(y.population)
+FROM world y WHERE x.continent = y.continent
+GROUP BY continent
+)
 
 
 
