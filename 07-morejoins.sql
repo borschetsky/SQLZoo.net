@@ -40,6 +40,17 @@ WHERE movieid = (SELECT id FROM movie WHERE title = 'Alien');
 #List the films in which 'Harrison Ford' has appeared
 SELECT title FROM movie JOIN casting ON(movie.id = casting.movieid)
 WHERE casting.actorid = (SELECT id FROM actor WHERE name = 'Harrison Ford');
+#Second query
+SELECT title FROM movie
+WHERE id IN (SELECT movieid FROM casting c
+		JOIN actor a ON c.actorid = a.id
+		WHERE a.name = 'Harrison Ford'); 
+#Third query
+SELECT m.title
+FROM movie m
+JOIN casting c ON m.id = c.movieid
+JOIN actor a ON c.actorid = a.id
+WHERE a.name = 'Harrison Ford'
 
 #09
 #List the films where 'Harrison Ford' has appeared - but not in the starring role. 
@@ -69,6 +80,14 @@ HAVING COUNT(title)=(SELECT MAX(c) FROM
  where name='John Travolta'
  GROUP BY yr) AS t		
 );
+#Second Query
+SELECT m.yr, COUNT(m.title)
+FROM movie m
+JOIN casting c ON m.id = c.movieid
+JOIN actor a ON a.id = c.actorid
+WHERE a.name = 'John Travolta'
+GROUP BY m.yr
+HAVING COUNT(m.title) > 2
 
 #12
 #List the film title and the leading actor for all of the films 'Julie Andrews' played in.
